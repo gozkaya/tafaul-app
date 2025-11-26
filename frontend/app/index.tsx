@@ -340,7 +340,7 @@ export default function Index() {
             disabled={loading}
           >
             <Ionicons name="refresh" size={20} color="#FFF" />
-            <Text style={styles.newVerseButtonText}>New Random Verse</Text>
+            <Text style={styles.newVerseButtonText}>{TRANSLATIONS[selectedLanguage.code].newVerse}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -349,7 +349,7 @@ export default function Index() {
             activeOpacity={0.8}
           >
             <Ionicons name="close-circle-outline" size={20} color="#666" />
-            <Text style={styles.clearButtonText}>Clear</Text>
+            <Text style={styles.clearButtonText}>{TRANSLATIONS[selectedLanguage.code].clear}</Text>
           </TouchableOpacity>
         </View>
 
