@@ -23,6 +23,30 @@ const { width, height } = Dimensions.get('window');
 const EXPO_PUBLIC_BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
 const API_BASE = `${EXPO_PUBLIC_BACKEND_URL}/api`;
 
+// Translations for UI text in all languages
+const TRANSLATIONS: Record<string, {
+  newVerse: string;
+  clear: string;
+  share: string;
+  surah: string;
+  translation: string;
+}> = {
+  ar: { newVerse: 'آية عشوائية جديدة', clear: 'مسح', share: 'مشاركة الآية', surah: 'سورة', translation: 'الترجمة' },
+  zh: { newVerse: '新随机经文', clear: '清除', share: '分享经文', surah: '章', translation: '翻译' },
+  nl: { newVerse: 'Nieuw Willekeurig Vers', clear: 'Wissen', share: 'Vers Delen', surah: 'Soera', translation: 'Vertaling' },
+  en: { newVerse: 'New Random Verse', clear: 'Clear', share: 'Share Verse', surah: 'Surah', translation: 'Translation' },
+  fi: { newVerse: 'Uusi Satunnainen Jae', clear: 'Tyhjennä', share: 'Jaa Jae', surah: 'Suura', translation: 'Käännös' },
+  fr: { newVerse: 'Nouveau Verset Aléatoire', clear: 'Effacer', share: 'Partager le Verset', surah: 'Sourate', translation: 'Traduction' },
+  de: { newVerse: 'Neuer Zufallsvers', clear: 'Löschen', share: 'Vers Teilen', surah: 'Sure', translation: 'Übersetzung' },
+  no: { newVerse: 'Nytt Tilfeldig Vers', clear: 'Tøm', share: 'Del Vers', surah: 'Sure', translation: 'Oversettelse' },
+  ru: { newVerse: 'Новый Случайный Аят', clear: 'Очистить', share: 'Поделиться Аятом', surah: 'Сура', translation: 'Перевод' },
+  es: { newVerse: 'Nuevo Verso Aleatorio', clear: 'Borrar', share: 'Compartir Verso', surah: 'Sura', translation: 'Traducción' },
+  sv: { newVerse: 'Ny Slumpmässig Vers', clear: 'Rensa', share: 'Dela Vers', surah: 'Sura', translation: 'Översättning' },
+  tr: { newVerse: 'Yeni Rastgele Ayet', clear: 'Temizle', share: 'Ayeti Paylaş', surah: 'Sure', translation: 'Çeviri' },
+  uk: { newVerse: 'Новий Випадковий Вірш', clear: 'Очистити', share: 'Поділитися Віршем', surah: 'Сура', translation: 'Переклад' },
+  ur: { newVerse: 'نئی بے ترتیب آیت', clear: 'صاف کریں', share: 'آیت شیئر کریں', surah: 'سورہ', translation: 'ترجمہ' },
+};
+
 // Language configurations with country colors (sorted alphabetically)
 const LANGUAGES = [
   { code: 'ar', name: 'العربية', flag: '🇸🇦', colors: ['#165B33', '#FFFFFF'] },
