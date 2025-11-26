@@ -233,6 +233,7 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.welcomeContent}>
+            <Text style={styles.bismillah}>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</Text>
             <Text style={styles.welcomeTitle}>TAFA'UL</Text>
             <Text style={styles.welcomeSubtitleArabic}>تَفَاؤُل</Text>
             <Text style={styles.welcomeDescription}>
