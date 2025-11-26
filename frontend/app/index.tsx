@@ -388,11 +388,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAFAFA',
   },
-  welcomeContent: {
-    flex: 1,
+  welcomeScrollContent: {
+    flexGrow: 1,
     justifyContent: 'center',
+    paddingVertical: 40,
+  },
+  welcomeContent: {
     alignItems: 'center',
-    padding: 32,
+    paddingHorizontal: 32,
   },
   welcomeTitle: {
     fontSize: 56,
