@@ -130,6 +130,10 @@ export default function Index() {
     fetchRandomVerse(selectedLanguage.code);
   };
 
+  const handleClearVerse = () => {
+    setVerse(null);
+  };
+
   const showToast = (message: string) => {
     setToast({ message, visible: true });
     setTimeout(() => {
