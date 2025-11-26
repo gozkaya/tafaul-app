@@ -481,6 +481,23 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textAlign: 'left',
   },
+  disclaimerBullet: {
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#666',
+    marginBottom: 10,
+    marginLeft: 8,
+    textAlign: 'left',
+  },
+  disclaimerClosing: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#444',
+    marginTop: 8,
+    marginBottom: 12,
+    textAlign: 'left',
+    fontWeight: '500',
+  },
   disclaimerNote: {
     fontSize: 13,
     lineHeight: 20,
