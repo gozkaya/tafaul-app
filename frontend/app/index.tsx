@@ -188,7 +188,7 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.welcomeContent}>
-            <Text style={styles.welcomeTitle}>TAFAUL</Text>
+            <Text style={styles.welcomeTitle}>TAFA'UL</Text>
             <Text style={styles.welcomeSubtitleArabic}>تَفَاؤُل</Text>
             <Text style={styles.welcomeDescription}>
               Random Verse from the Holy Quran
