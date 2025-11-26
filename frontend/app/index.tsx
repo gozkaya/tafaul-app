@@ -197,6 +197,15 @@ export default function Index() {
               Find peace and guidance through divine verses
             </Text>
             
+            <TouchableOpacity
+              style={styles.enterButton}
+              onPress={handleEnterApp}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.enterButtonText}>Enter</Text>
+              <Ionicons name="arrow-forward" size={20} color="#FFF" />
+            </TouchableOpacity>
+
             <View style={styles.disclaimerContainer}>
               <Text style={styles.disclaimerTitle}>What is Tafa'ul?</Text>
               
@@ -232,15 +241,6 @@ export default function Index() {
                 "Indeed, in the remembrance of Allah do hearts find rest." - Quran 13:28
               </Text>
             </View>
-            
-            <TouchableOpacity
-              style={styles.enterButton}
-              onPress={handleEnterApp}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.enterButtonText}>Enter</Text>
-              <Ionicons name="arrow-forward" size={20} color="#FFF" />
-            </TouchableOpacity>
           </View>
         </ScrollView>
       </SafeAreaView>
