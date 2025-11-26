@@ -175,25 +175,43 @@ export default function Index() {
   if (showWelcome) {
     return (
       <SafeAreaView style={styles.welcomeContainer}>
-        <View style={styles.welcomeContent}>
-          <Text style={styles.welcomeTitle}>TAFAUL</Text>
-          <Text style={styles.welcomeSubtitleArabic}>تَفَاؤُل</Text>
-          <Text style={styles.welcomeDescription}>
-            Random Verse from the Holy Quran
-          </Text>
-          <Text style={styles.welcomeDescription2}>
-            Find peace and guidance through divine verses
-          </Text>
-          
-          <TouchableOpacity
-            style={styles.enterButton}
-            onPress={handleEnterApp}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.enterButtonText}>Enter</Text>
-            <Ionicons name="arrow-forward" size={20} color="#FFF" />
-          </TouchableOpacity>
-        </View>
+        <ScrollView 
+          contentContainerStyle={styles.welcomeScrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.welcomeContent}>
+            <Text style={styles.welcomeTitle}>TAFAUL</Text>
+            <Text style={styles.welcomeSubtitleArabic}>تَفَاؤُل</Text>
+            <Text style={styles.welcomeDescription}>
+              Random Verse from the Holy Quran
+            </Text>
+            <Text style={styles.welcomeDescription2}>
+              Find peace and guidance through divine verses
+            </Text>
+            
+            <View style={styles.disclaimerContainer}>
+              <Text style={styles.disclaimerTitle}>What is Tafa'ul?</Text>
+              <Text style={styles.disclaimerText}>
+                Tafa'ul (تَفَاؤُل) means "optimism" or "seeking a good omen" in Arabic. It is a practice where one opens the Quran randomly, seeking guidance, comfort, or inspiration from Allah's words.
+              </Text>
+              <Text style={styles.disclaimerText}>
+                The Prophet Muhammad (peace be upon him) loved optimism and encouraged positive thinking. While Tafa'ul with the Quran is not a method of fortune-telling, many Muslims find solace and reflection through random verses, believing that Allah's guidance can reach us in unexpected ways.
+              </Text>
+              <Text style={styles.disclaimerNote}>
+                "Indeed, in the remembrance of Allah do hearts find rest." - Quran 13:28
+              </Text>
+            </View>
+            
+            <TouchableOpacity
+              style={styles.enterButton}
+              onPress={handleEnterApp}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.enterButtonText}>Enter</Text>
+              <Ionicons name="arrow-forward" size={20} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
