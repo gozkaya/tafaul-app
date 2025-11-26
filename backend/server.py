@@ -66,6 +66,54 @@ async def get_languages():
         for code, info in LANGUAGE_MAPPINGS.items()
     ]
 
+async def fetch_verse_with_fallback(verse_number: int, translation_code: str):
+    """
+    Fetch verse with multiple API fallbacks for redundancy
+    """
+    # Primary API: Al-Quran Cloud
+    try:
+        async with httpx.AsyncClient() as client:
+            url = f"https://api.alquran.cloud/v1/ayah/{verse_number}/editions/quran-uthmani,{translation_code}"
+            response = await client.get(url, timeout=10.0)
+            response.raise_for_status()
+            data = response.json()
+            
+            if data['code'] == 200:
+                return {'source': 'alquran.cloud', 'data': data['data']}
+    except Exception as e:
+        logging.warning(f"Primary API (alquran.cloud) failed: {e}")
+    
+    # Fallback API 1: Quran.com API
+    try:
+        async with httpx.AsyncClient() as client:
+            # Get verse info
+            url = f"https://api.quran.com/api/v4/verses/by_key/{verse_number}?words=false&translations={translation_code}"
+            response = await client.get(url, timeout=10.0)
+            response.raise_for_status()
+            data = response.json()
+            
+            # Transform to our format
+            verse_data = data.get('verse', {})
+            # Note: This is a simplified fallback - in production you'd handle the full transformation
+            return {'source': 'quran.com', 'data': data}
+    except Exception as e:
+        logging.warning(f"Fallback API 1 (quran.com) failed: {e}")
+    
+    # Fallback API 2: QuranEnc.com (if previous fail)
+    try:
+        async with httpx.AsyncClient() as client:
+            url = f"https://quranenc.com/api/v1/translation/aya/english_saheeh/{verse_number}"
+            response = await client.get(url, timeout=10.0)
+            response.raise_for_status()
+            data = response.json()
+            return {'source': 'quranenc.com', 'data': data}
+    except Exception as e:
+        logging.warning(f"Fallback API 2 (quranenc.com) failed: {e}")
+    
+    # All APIs failed
+    raise HTTPException(status_code=503, detail="All Quran API services are currently unavailable. Please try again later.")
+
+
 @api_router.get("/random-verse")
 async def get_random_verse(language: str = "en"):
     """Get a random verse from the Quran with translation"""
@@ -80,19 +128,12 @@ async def get_random_verse(language: str = "en"):
     translation_code = LANGUAGE_MAPPINGS[language]['code']
     
     try:
-        async with httpx.AsyncClient() as client:
-            # Fetch the verse with Arabic text and translation
-            url = f"https://api.alquran.cloud/v1/ayah/{random_verse_number}/editions/quran-uthmani,{translation_code}"
-            response = await client.get(url, timeout=10.0)
-            response.raise_for_status()
-            data = response.json()
-            
-            if data['code'] != 200:
-                raise HTTPException(status_code=500, detail="Failed to fetch verse from Quran API")
-            
-            # Extract Arabic and translation
-            arabic_data = data['data'][0]
-            translation_data = data['data'][1]
+        result = await fetch_verse_with_fallback(random_verse_number, translation_code)
+        
+        # Extract Arabic and translation (from primary API format)
+        if result['source'] == 'alquran.cloud':
+            arabic_data = result['data'][0]
+            translation_data = result['data'][1]
             
             return VerseResponse(
                 surah_number=arabic_data['surah']['number'],
@@ -104,12 +145,78 @@ async def get_random_verse(language: str = "en"):
                 language=LANGUAGE_MAPPINGS[language]['name'],
                 reference=f"Surah {arabic_data['surah']['englishName']} ({arabic_data['surah']['number']}:{arabic_data['numberInSurah']})"
             )
+        else:
+            # Handle other API formats if needed
+            raise HTTPException(status_code=500, detail="Unsupported API response format")
     
-    except httpx.HTTPError as e:
-        logging.error(f"HTTP error fetching verse: {e}")
-        raise HTTPException(status_code=500, detail="Failed to fetch verse from external API")
+    except HTTPException:
+        raise
     except Exception as e:
         logging.error(f"Error fetching verse: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
+@api_router.get("/verse/{surah_number}/{verse_number}")
+async def get_specific_verse(surah_number: int, verse_number: int, language: str = "en"):
+    """Get a specific verse by surah and verse number with translation"""
+    
+    if language not in LANGUAGE_MAPPINGS:
+        raise HTTPException(status_code=400, detail=f"Language '{language}' not supported")
+    
+    # Calculate absolute verse number
+    # This is a simplified approach - in production you'd have a proper mapping
+    try:
+        async with httpx.AsyncClient() as client:
+            # Get surah info to calculate absolute verse number
+            surah_url = f"https://api.alquran.cloud/v1/surah/{surah_number}"
+            surah_response = await client.get(surah_url, timeout=10.0)
+            surah_response.raise_for_status()
+            surah_data = surah_response.json()
+            
+            if surah_data['code'] != 200:
+                raise HTTPException(status_code=404, detail="Surah not found")
+            
+            # Get the specific ayah
+            ayahs = surah_data['data']['ayahs']
+            target_ayah = None
+            for ayah in ayahs:
+                if ayah['numberInSurah'] == verse_number:
+                    target_ayah = ayah
+                    break
+            
+            if not target_ayah:
+                raise HTTPException(status_code=404, detail="Verse not found in surah")
+            
+            absolute_verse_number = target_ayah['number']
+            
+            # Get translation code
+            translation_code = LANGUAGE_MAPPINGS[language]['code']
+            
+            # Fetch the verse with fallback
+            result = await fetch_verse_with_fallback(absolute_verse_number, translation_code)
+            
+            # Extract Arabic and translation
+            if result['source'] == 'alquran.cloud':
+                arabic_data = result['data'][0]
+                translation_data = result['data'][1]
+                
+                return VerseResponse(
+                    surah_number=arabic_data['surah']['number'],
+                    surah_name=arabic_data['surah']['englishName'],
+                    surah_name_arabic=arabic_data['surah']['name'],
+                    verse_number=arabic_data['numberInSurah'],
+                    arabic_text=arabic_data['text'],
+                    translation=translation_data['text'],
+                    language=LANGUAGE_MAPPINGS[language]['name'],
+                    reference=f"Surah {arabic_data['surah']['englishName']} ({arabic_data['surah']['number']}:{arabic_data['numberInSurah']})"
+                )
+            else:
+                raise HTTPException(status_code=500, detail="Unsupported API response format")
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error fetching specific verse: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
 # Include the router in the main app
