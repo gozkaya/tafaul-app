@@ -272,55 +272,48 @@ export default function Index() {
             </Text>
           </View>
         ) : verse ? (
-          <View style={styles.verseContainer}>
-            {/* Arabic Text */}
-            <View style={styles.arabicSection}>
-              <Text style={styles.arabicText}>{verse.arabic_text}</Text>
+          <View>
+            <View style={styles.verseContainer}>
+              {/* Arabic Text */}
+              <View style={styles.arabicSection}>
+                <Text style={styles.arabicText}>{verse.arabic_text}</Text>
+              </View>
+
+              {/* Divider */}
+              <View style={[styles.divider, { backgroundColor: selectedLanguage.colors[0] }]} />
+
+              {/* Translation */}
+              <View style={styles.translationSection}>
+                <Text style={styles.languageLabel}>{selectedLanguage.name} Translation</Text>
+                <Text style={styles.translationText}>{verse.translation}</Text>
+              </View>
+
+              {/* Reference */}
+              <View style={styles.referenceSection}>
+                <Text style={[styles.referenceText, { color: selectedLanguage.colors[0] }]}>
+                  {verse.reference}
+                </Text>
+                <Text style={styles.surahNameArabic}>{verse.surah_name_arabic}</Text>
+              </View>
             </View>
 
-            {/* Divider */}
-            <View style={[styles.divider, { backgroundColor: selectedLanguage.colors[0] }]} />
-
-            {/* Translation */}
-            <View style={styles.translationSection}>
-              <Text style={styles.languageLabel}>{selectedLanguage.name} Translation</Text>
-              <Text style={styles.translationText}>{verse.translation}</Text>
-            </View>
-
-            {/* Reference */}
-            <View style={styles.referenceSection}>
-              <Text style={[styles.referenceText, { color: selectedLanguage.colors[0] }]}>
-                {verse.reference}
-              </Text>
-              <Text style={styles.surahNameArabic}>{verse.surah_name_arabic}</Text>
-            </View>
+            {/* Share Button */}
+            <TouchableOpacity
+              style={[styles.shareButton]}
+              onPress={handleShare}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="share-social-outline" size={20} color="#666" />
+              <Text style={styles.shareButtonText}>Share Verse</Text>
+            </TouchableOpacity>
           </View>
-        ) : null}
-
-        {/* Action Buttons */}
-        <View style={styles.actionsContainer}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.shareButton]}
-            onPress={handleShare}
-            activeOpacity={0.8}
-            disabled={!verse}
-          >
-            <Ionicons name="share-social-outline" size={24} color="#666" />
-            <Text style={styles.shareButtonText}>Share</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.actionButton, styles.newVerseButton, {
-              backgroundColor: selectedLanguage.colors[0]
-            }]}
-            onPress={handleNewVerse}
-            activeOpacity={0.8}
-            disabled={loading}
-          >
-            <Ionicons name="refresh" size={24} color="#FFF" />
-            <Text style={styles.newVerseButtonText}>New Random Verse</Text>
-          </TouchableOpacity>
-        </View>
+        ) : (
+          <View style={styles.emptyStateContainer}>
+            <Ionicons name="book-outline" size={80} color="#CCC" />
+            <Text style={styles.emptyStateText}>No verse selected</Text>
+            <Text style={styles.emptyStateSubtext}>Tap "New Random Verse" to get started</Text>
+          </View>
+        )}
       </ScrollView>
 
       {/* Language Selection Modal */}
