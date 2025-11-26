@@ -126,8 +126,28 @@ export default function Index() {
       console.error('Error saving language:', error);
     }
 
-    // Just show toast notification, don't fetch new verse
-    showToast(`Language changed to ${lang.name}`);
+    // If there's a current verse, translate it to the new language
+    if (verse) {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${API_BASE}/verse/${verse.surah_number}/${verse.verse_number}?language=${lang.code}`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch translated verse');
+        }
+        const data = await response.json();
+        setVerse(data);
+        showToast(`Verse translated to ${lang.name}`);
+      } catch (error) {
+        console.error('Error translating verse:', error);
+        showToast('Failed to translate verse. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      showToast(`Language changed to ${lang.name}`);
+    }
   };
 
   const handleNewVerse = () => {
