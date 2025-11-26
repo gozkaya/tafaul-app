@@ -382,18 +382,18 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   welcomeTitle: {
-    fontSize: 72,
-    fontWeight: '300',
+    fontSize: 56,
+    fontWeight: '700',
     color: '#165B33',
     marginBottom: 8,
-    letterSpacing: 2,
+    letterSpacing: 4,
   },
-  welcomeSubtitle: {
-    fontSize: 32,
-    fontWeight: '400',
+  welcomeSubtitleArabic: {
+    fontSize: 36,
+    fontWeight: '300',
     color: '#666',
     marginBottom: 48,
-    letterSpacing: 3,
+    letterSpacing: 2,
   },
   welcomeDescription: {
     fontSize: 18,
