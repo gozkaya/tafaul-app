@@ -455,10 +455,10 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   appTitle: {
-    fontSize: 36,
-    fontWeight: '300',
+    fontSize: 28,
+    fontWeight: '700',
     color: '#165B33',
-    letterSpacing: 2,
+    letterSpacing: 3,
   },
   languageButton: {
     flexDirection: 'row',
