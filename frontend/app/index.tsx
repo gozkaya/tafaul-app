@@ -77,10 +77,21 @@ export default function Index() {
         const lang = LANGUAGES.find(l => l.code === savedLangCode);
         if (lang) {
           setSelectedLanguage(lang);
+        } else {
+          // If saved language not found, default to English
+          const english = LANGUAGES.find(l => l.code === 'en');
+          if (english) setSelectedLanguage(english);
         }
+      } else {
+        // No saved language, default to English
+        const english = LANGUAGES.find(l => l.code === 'en');
+        if (english) setSelectedLanguage(english);
       }
     } catch (error) {
       console.error('Error loading saved language:', error);
+      // On error, default to English
+      const english = LANGUAGES.find(l => l.code === 'en');
+      if (english) setSelectedLanguage(english);
     } finally {
       setInitialLoading(false);
     }
