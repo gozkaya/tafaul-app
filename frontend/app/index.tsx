@@ -76,16 +76,10 @@ export default function Index() {
         const lang = LANGUAGES.find(l => l.code === savedLangCode);
         if (lang) {
           setSelectedLanguage(lang);
-          await fetchRandomVerse(lang.code);
-        } else {
-          await fetchRandomVerse(LANGUAGES[0].code);
         }
-      } else {
-        await fetchRandomVerse(LANGUAGES[0].code);
       }
     } catch (error) {
       console.error('Error loading saved language:', error);
-      await fetchRandomVerse(LANGUAGES[0].code);
     } finally {
       setInitialLoading(false);
     }
