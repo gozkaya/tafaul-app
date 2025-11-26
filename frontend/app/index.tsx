@@ -20,7 +20,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-const API_BASE = 'https://verse-translator.preview.emergentagent.com/api';
+const EXPO_PUBLIC_BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
+const API_BASE = `${EXPO_PUBLIC_BACKEND_URL}/api`;
 
 // Language configurations with country colors (sorted alphabetically)
 const LANGUAGES = [
