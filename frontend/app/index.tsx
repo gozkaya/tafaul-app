@@ -474,6 +474,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 32,
   },
+  bismillah: {
+    fontSize: 24,
+    fontWeight: '400',
+    color: '#165B33',
+    marginBottom: 32,
+    textAlign: 'center',
+    letterSpacing: 1,
+  },
   welcomeTitle: {
     fontSize: 56,
     fontWeight: '700',
