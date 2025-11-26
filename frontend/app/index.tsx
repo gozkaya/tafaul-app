@@ -374,14 +374,14 @@ export default function Index() {
 
               {/* Translation */}
               <View style={styles.translationSection}>
-                <Text style={styles.languageLabel}>{selectedLanguage.name} Translation</Text>
+                <Text style={styles.languageLabel}>{selectedLanguage.name} {TRANSLATIONS[selectedLanguage.code].translation}</Text>
                 <Text style={styles.translationText}>{verse.translation}</Text>
               </View>
 
               {/* Reference */}
               <View style={styles.referenceSection}>
                 <Text style={[styles.referenceText, { color: selectedLanguage.colors[0] }]}>
-                  {verse.reference}
+                  {TRANSLATIONS[selectedLanguage.code].surah} {verse.surah_name} ({verse.surah_number}:{verse.verse_number})
                 </Text>
                 <Text style={styles.surahNameArabic}>{verse.surah_name_arabic}</Text>
               </View>
@@ -394,7 +394,7 @@ export default function Index() {
               activeOpacity={0.8}
             >
               <Ionicons name="share-social-outline" size={20} color="#666" />
-              <Text style={styles.shareButtonText}>Share Verse</Text>
+              <Text style={styles.shareButtonText}>{TRANSLATIONS[selectedLanguage.code].share}</Text>
             </TouchableOpacity>
           </View>
         ) : (
