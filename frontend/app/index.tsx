@@ -266,7 +266,7 @@ export default function Index() {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.appTitle}>TAFAUL</Text>
+          <Text style={styles.appTitle}>TAFA'UL</Text>
           <TouchableOpacity
             style={[styles.languageButton, { 
               borderColor: selectedLanguage.colors[0],
