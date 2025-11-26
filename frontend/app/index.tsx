@@ -58,7 +58,7 @@ interface ToastMessage {
 
 export default function Index() {
   const [showWelcome, setShowWelcome] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
+  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES.find(l => l.code === 'en') || LANGUAGES[0]);
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(false);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
