@@ -563,27 +563,19 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  // Action Buttons
-  actionsContainer: {
+  // Top Action Buttons
+  topActionsContainer: {
+    flexDirection: 'row',
     gap: 12,
+    marginBottom: 24,
   },
-  actionButton: {
+  topActionButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 12,
     gap: 8,
-  },
-  shareButton: {
-    backgroundColor: '#F5F5F5',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-  },
-  shareButtonText: {
-    fontSize: 16,
-    color: '#666',
-    fontWeight: '600',
   },
   newVerseButton: {
     shadowColor: '#000',
@@ -593,10 +585,63 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   newVerseButtonText: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#FFF',
     fontWeight: '600',
     letterSpacing: 0.5,
+  },
+  clearButton: {
+    backgroundColor: '#F5F5F5',
+    borderWidth: 1.5,
+    borderColor: '#E0E0E0',
+    paddingHorizontal: 20,
+  },
+  clearButtonText: {
+    fontSize: 15,
+    color: '#666',
+    fontWeight: '600',
+  },
+
+  // Share Button (below verse)
+  shareButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    paddingVertical: 14,
+    borderRadius: 12,
+    gap: 8,
+    marginTop: 16,
+  },
+  shareButtonText: {
+    fontSize: 15,
+    color: '#666',
+    fontWeight: '600',
+  },
+
+  // Empty State
+  emptyStateContainer: {
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    padding: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 300,
+    marginBottom: 24,
+  },
+  emptyStateText: {
+    fontSize: 20,
+    color: '#999',
+    fontWeight: '600',
+    marginTop: 20,
+    marginBottom: 8,
+  },
+  emptyStateSubtext: {
+    fontSize: 14,
+    color: '#BBB',
+    textAlign: 'center',
   },
 
   // Language Modal
