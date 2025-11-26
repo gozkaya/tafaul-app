@@ -19,21 +19,24 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-# Language mappings
+# Language mappings (sorted alphabetically)
 LANGUAGE_MAPPINGS = {
     'ar': {'code': 'ar.alafasy', 'name': 'العربية (Arabic)', 'flag': '🇸🇦'},
+    'bn': {'code': 'bn.bengali', 'name': 'বাংলা (Bengali)', 'flag': '🇧🇩'},
     'zh': {'code': 'zh.jian', 'name': '中文 (Chinese)', 'flag': '🇨🇳'},
-    'nl': {'code': 'nl.keyzer', 'name': 'Nederlands (Dutch)', 'flag': '🇳🇱'},
     'en': {'code': 'en.sahih', 'name': 'English', 'flag': '🇬🇧'},
-    'fi': {'code': 'fi.finnish', 'name': 'Suomi (Finnish)', 'flag': '🇫🇮'},
     'fr': {'code': 'fr.hamidullah', 'name': 'Français (French)', 'flag': '🇫🇷'},
     'de': {'code': 'de.bubenheim', 'name': 'Deutsch (German)', 'flag': '🇩🇪'},
-    'no': {'code': 'no.berg', 'name': 'Norsk (Norwegian)', 'flag': '🇳🇴'},
+    'hi': {'code': 'hi.hindi', 'name': 'हिन्दी (Hindi)', 'flag': '🇮🇳'},
+    'id': {'code': 'id.indonesian', 'name': 'Bahasa Indonesia (Indonesian)', 'flag': '🇮🇩'},
+    'ja': {'code': 'ja.japanese', 'name': '日本語 (Japanese)', 'flag': '🇯🇵'},
+    'ms': {'code': 'ms.basmeih', 'name': 'Bahasa Melayu (Malay)', 'flag': '🇲🇾'},
+    'pt': {'code': 'pt.elhayek', 'name': 'Português (Portuguese)', 'flag': '🇧🇷'},
     'ru': {'code': 'ru.kuliev', 'name': 'Русский (Russian)', 'flag': '🇷🇺'},
     'es': {'code': 'es.cortes', 'name': 'Español (Spanish)', 'flag': '🇪🇸'},
-    'sv': {'code': 'sv.bernstrom', 'name': 'Svenska (Swedish)', 'flag': '🇸🇪'},
+    'sw': {'code': 'sw.barwani', 'name': 'Kiswahili (Swahili)', 'flag': '🇰🇪'},
+    'ta': {'code': 'ta.tamil', 'name': 'தமிழ் (Tamil)', 'flag': '🇮🇳'},
     'tr': {'code': 'tr.ates', 'name': 'Türkçe (Turkish)', 'flag': '🇹🇷'},
-    'uk': {'code': 'uk.korkmasov', 'name': 'Українська (Ukrainian)', 'flag': '🇺🇦'},
     'ur': {'code': 'ur.jalandhry', 'name': 'اردو (Urdu)', 'flag': '🇵🇰'},
 }
 
