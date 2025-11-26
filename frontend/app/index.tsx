@@ -181,8 +181,8 @@ export default function Index() {
     return (
       <SafeAreaView style={styles.welcomeContainer}>
         <View style={styles.welcomeContent}>
-          <Text style={styles.welcomeTitle}>تَفَاؤُل</Text>
-          <Text style={styles.welcomeSubtitle}>Tafa'ul</Text>
+          <Text style={styles.welcomeTitle}>TAFAUL</Text>
+          <Text style={styles.welcomeSubtitleArabic}>تَفَاؤُل</Text>
           <Text style={styles.welcomeDescription}>
             Random Verse from the Holy Quran
           </Text>
