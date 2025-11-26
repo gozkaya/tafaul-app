@@ -125,11 +125,8 @@ export default function Index() {
       console.error('Error saving language:', error);
     }
 
-    // Re-translate current verse if exists
-    if (verse) {
-      await fetchRandomVerse(lang.code);
-      showToast(`Language changed to ${lang.name}`);
-    }
+    // Just show toast notification, don't fetch new verse
+    showToast(`Language changed to ${lang.name}`);
   };
 
   const handleNewVerse = () => {
