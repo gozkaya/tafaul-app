@@ -22,21 +22,22 @@ const { width, height } = Dimensions.get('window');
 
 const API_BASE = 'https://verse-translator.preview.emergentagent.com/api';
 
-// Language configurations with country colors
+// Language configurations with country colors (sorted alphabetically)
 const LANGUAGES = [
-  { code: 'en', name: 'English', flag: '🇬🇧', colors: ['#C8102E', '#012169'] },
   { code: 'ar', name: 'العربية', flag: '🇸🇦', colors: ['#165B33', '#FFFFFF'] },
-  { code: 'tr', name: 'Türkçe', flag: '🇹🇷', colors: ['#E30A17', '#FFFFFF'] },
-  { code: 'ur', name: 'اردو', flag: '🇵🇰', colors: ['#01411C', '#FFFFFF'] },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪', colors: ['#DD0000', '#FFCE00'] },
-  { code: 'fr', name: 'Français', flag: '🇫🇷', colors: ['#0055A4', '#EF4135'] },
-  { code: 'sv', name: 'Svenska', flag: '🇸🇪', colors: ['#006AA7', '#FECC00'] },
-  { code: 'fi', name: 'Suomi', flag: '🇫🇮', colors: ['#003580', '#FFFFFF'] },
-  { code: 'no', name: 'Norsk', flag: '🇳🇴', colors: ['#BA0C2F', '#00205B'] },
-  { code: 'nl', name: 'Nederlands', flag: '🇳🇱', colors: ['#FF6600', '#21468B'] },
-  { code: 'es', name: 'Español', flag: '🇪🇸', colors: ['#AA151B', '#F1BF00'] },
   { code: 'zh', name: '中文', flag: '🇨🇳', colors: ['#DE2910', '#FFDE00'] },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱', colors: ['#FF6600', '#21468B'] },
+  { code: 'en', name: 'English', flag: '🇬🇧', colors: ['#C8102E', '#012169'] },
+  { code: 'fi', name: 'Suomi', flag: '🇫🇮', colors: ['#003580', '#FFFFFF'] },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', colors: ['#0055A4', '#EF4135'] },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪', colors: ['#DD0000', '#FFCE00'] },
+  { code: 'no', name: 'Norsk', flag: '🇳🇴', colors: ['#BA0C2F', '#00205B'] },
   { code: 'ru', name: 'Русский', flag: '🇷🇺', colors: ['#0039A6', '#D52B1E'] },
+  { code: 'es', name: 'Español', flag: '🇪🇸', colors: ['#AA151B', '#F1BF00'] },
+  { code: 'sv', name: 'Svenska', flag: '🇸🇪', colors: ['#006AA7', '#FECC00'] },
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷', colors: ['#E30A17', '#FFFFFF'] },
+  { code: 'uk', name: 'Українська', flag: '🇺🇦', colors: ['#005BBB', '#FFD500'] },
+  { code: 'ur', name: 'اردو', flag: '🇵🇰', colors: ['#01411C', '#FFFFFF'] },
 ];
 
 interface Verse {
