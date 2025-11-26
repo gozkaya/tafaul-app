@@ -199,12 +199,35 @@ export default function Index() {
             
             <View style={styles.disclaimerContainer}>
               <Text style={styles.disclaimerTitle}>What is Tafa'ul?</Text>
+              
               <Text style={styles.disclaimerText}>
-                Tafa'ul (تَفَاؤُل) means "optimism" or "seeking a good omen" in Arabic. It is a practice where one opens the Quran randomly, seeking guidance, comfort, or inspiration from Allah's words.
+                Tafa'ul (تَفَاؤُل) is a long-standing Islamic tradition of taking positive inspiration and hopeful reflection from the Qur'an. Some Muslims choose to open the Qur'an at a random page and read the first verse they see as a symbolic reminder, not as a prediction or a decisive ruling. It is a way of uplifting the heart, strengthening trust in Allah, and seeking comfort through His words.
               </Text>
+              
               <Text style={styles.disclaimerText}>
-                The Prophet Muhammad (peace be upon him) loved optimism and encouraged positive thinking. While Tafa'ul with the Quran is not a method of fortune-telling, many Muslims find solace and reflection through random verses, believing that Allah's guidance can reach us in unexpected ways.
+                This app is designed to support that spirit of optimism, mindfulness, and reflection. However, please keep in mind:
               </Text>
+
+              <Text style={styles.disclaimerBullet}>
+                • Tafa'ul is not fortune-telling. It does not foretell the future or provide guaranteed answers.
+              </Text>
+
+              <Text style={styles.disclaimerBullet}>
+                • It does not replace prayer, istikhāra, or personal judgement. Important decisions should still be made through sincere dua, reflection, and consultation.
+              </Text>
+
+              <Text style={styles.disclaimerBullet}>
+                • The verses shown are for inspiration only. They are not meant to give legal rulings or specific instructions for your situation.
+              </Text>
+
+              <Text style={styles.disclaimerBullet}>
+                • Interpretations are symbolic and personal. The meaning you derive is between you and Allah within the boundaries of Islamic guidance.
+              </Text>
+
+              <Text style={styles.disclaimerClosing}>
+                Always remember that the Qur'an is a source of mercy, wisdom, and hope. Use tafa'ul as a means of reflection, not as a tool of certainty — and place your trust in Allah, who guides hearts in the best of ways.
+              </Text>
+              
               <Text style={styles.disclaimerNote}>
                 "Indeed, in the remembrance of Allah do hearts find rest." - Quran 13:28
               </Text>
