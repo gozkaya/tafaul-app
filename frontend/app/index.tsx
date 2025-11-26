@@ -218,7 +218,7 @@ export default function Index() {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.appTitle}>تَفَاؤُل</Text>
+          <Text style={styles.appTitle}>TAFAUL</Text>
           <TouchableOpacity
             style={[styles.languageButton, { 
               borderColor: selectedLanguage.colors[0],
@@ -231,6 +231,31 @@ export default function Index() {
             <Text style={[styles.languageButtonText, { color: selectedLanguage.colors[0] }]}>
               {selectedLanguage.name}
             </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Action Buttons at Top */}
+        <View style={styles.topActionsContainer}>
+          <TouchableOpacity
+            style={[styles.topActionButton, styles.newVerseButton, {
+              backgroundColor: selectedLanguage.colors[0],
+              flex: 1,
+            }]}
+            onPress={handleNewVerse}
+            activeOpacity={0.8}
+            disabled={loading}
+          >
+            <Ionicons name="refresh" size={20} color="#FFF" />
+            <Text style={styles.newVerseButtonText}>New Random Verse</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.topActionButton, styles.clearButton]}
+            onPress={handleClearVerse}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="close-circle-outline" size={20} color="#666" />
+            <Text style={styles.clearButtonText}>Clear</Text>
           </TouchableOpacity>
         </View>
 
