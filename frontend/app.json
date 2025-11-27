@@ -16,10 +16,13 @@
         "ITSAppUsesNonExemptEncryption": false
       }
     },
+    "androidStatusBar": {
+      "backgroundColor": "#000000"
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#000"
+        "backgroundColor": "#FFFFFF"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.tafaul.app"
