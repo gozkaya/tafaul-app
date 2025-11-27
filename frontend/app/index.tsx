@@ -190,18 +190,30 @@ export default function Index() {
     if (verse) {
       setLoading(true);
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 20000);
+        
         const response = await fetch(
-          `${API_BASE}/verse/${verse.surah_number}/${verse.verse_number}?language=${lang.code}`
+          `${API_BASE}/verse/${verse.surah_number}/${verse.verse_number}?language=${lang.code}`,
+          { signal: controller.signal }
         );
+        
+        clearTimeout(timeoutId);
+        
         if (!response.ok) {
           throw new Error('Failed to fetch translated verse');
         }
         const data = await response.json();
         setVerse(data);
         showToast(`Verse translated to ${lang.name}`);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error translating verse:', error);
-        showToast('Failed to translate verse. Please try again.');
+        if (error.name === 'AbortError') {
+          showToast('Translation timeout. Please try again.');
+        } else {
+          showToast('Failed to translate verse. Please try again.');
+        }
+        // Keep the old verse if translation fails
       } finally {
         setLoading(false);
       }
