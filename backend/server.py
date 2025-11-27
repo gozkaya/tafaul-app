@@ -69,52 +69,72 @@ async def get_languages():
         for code, info in LANGUAGE_MAPPINGS.items()
     ]
 
-async def fetch_verse_with_fallback(verse_number: int, translation_code: str):
+async def fetch_verse_with_fallback(verse_number: int, translation_code: str, max_retries: int = 3):
     """
-    Fetch verse with multiple API fallbacks for redundancy
+    Fetch verse with multiple API fallbacks and retry logic for maximum redundancy
     """
-    # Primary API: Al-Quran Cloud
-    try:
-        async with httpx.AsyncClient() as client:
-            url = f"https://api.alquran.cloud/v1/ayah/{verse_number}/editions/quran-uthmani,{translation_code}"
-            response = await client.get(url, timeout=10.0)
-            response.raise_for_status()
-            data = response.json()
-            
-            if data['code'] == 200:
-                return {'source': 'alquran.cloud', 'data': data['data']}
-    except Exception as e:
-        logging.warning(f"Primary API (alquran.cloud) failed: {e}")
+    import asyncio
     
-    # Fallback API 1: Quran.com API
-    try:
-        async with httpx.AsyncClient() as client:
-            # Get verse info
-            url = f"https://api.quran.com/api/v4/verses/by_key/{verse_number}?words=false&translations={translation_code}"
-            response = await client.get(url, timeout=10.0)
-            response.raise_for_status()
-            data = response.json()
-            
-            # Transform to our format
-            verse_data = data.get('verse', {})
-            # Note: This is a simplified fallback - in production you'd handle the full transformation
-            return {'source': 'quran.com', 'data': data}
-    except Exception as e:
-        logging.warning(f"Fallback API 1 (quran.com) failed: {e}")
+    # Primary API: Al-Quran Cloud with retry logic
+    for attempt in range(max_retries):
+        try:
+            async with httpx.AsyncClient() as client:
+                url = f"https://api.alquran.cloud/v1/ayah/{verse_number}/editions/quran-uthmani,{translation_code}"
+                response = await client.get(url, timeout=15.0)  # Increased timeout
+                response.raise_for_status()
+                data = response.json()
+                
+                if data['code'] == 200:
+                    logging.info(f"Successfully fetched verse {verse_number} from primary API (attempt {attempt + 1})")
+                    return {'source': 'alquran.cloud', 'data': data['data']}
+        except httpx.TimeoutException as e:
+            logging.warning(f"Primary API timeout (attempt {attempt + 1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(1 * (attempt + 1))  # Exponential backoff
+                continue
+        except httpx.HTTPStatusError as e:
+            logging.warning(f"Primary API HTTP error (attempt {attempt + 1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(1 * (attempt + 1))
+                continue
+        except Exception as e:
+            logging.warning(f"Primary API error (attempt {attempt + 1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(1 * (attempt + 1))
+                continue
     
-    # Fallback API 2: QuranEnc.com (if previous fail)
-    try:
-        async with httpx.AsyncClient() as client:
-            url = f"https://quranenc.com/api/v1/translation/aya/english_saheeh/{verse_number}"
-            response = await client.get(url, timeout=10.0)
-            response.raise_for_status()
-            data = response.json()
-            return {'source': 'quranenc.com', 'data': data}
-    except Exception as e:
-        logging.warning(f"Fallback API 2 (quranenc.com) failed: {e}")
+    logging.error("Primary API (alquran.cloud) failed after all retries")
+    
+    # Fallback API 1: Try alternative endpoint with retry
+    for attempt in range(2):  # Fewer retries for fallback
+        try:
+            async with httpx.AsyncClient() as client:
+                # Try getting the verse directly
+                url = f"https://api.alquran.cloud/v1/ayah/{verse_number}"
+                response = await client.get(url, timeout=15.0)
+                response.raise_for_status()
+                arabic_data = response.json()['data']
+                
+                # Get translation separately
+                url_trans = f"https://api.alquran.cloud/v1/ayah/{verse_number}/{translation_code}"
+                response_trans = await client.get(url_trans, timeout=15.0)
+                response_trans.raise_for_status()
+                trans_data = response_trans.json()['data']
+                
+                logging.info(f"Successfully fetched verse {verse_number} from fallback API 1")
+                return {'source': 'alquran.cloud', 'data': [arabic_data, trans_data]}
+        except Exception as e:
+            logging.warning(f"Fallback API 1 error (attempt {attempt + 1}): {e}")
+            if attempt < 1:
+                await asyncio.sleep(2)
+                continue
     
     # All APIs failed
-    raise HTTPException(status_code=503, detail="All Quran API services are currently unavailable. Please try again later.")
+    logging.error(f"All API attempts failed for verse {verse_number}")
+    raise HTTPException(
+        status_code=503, 
+        detail="Unable to fetch verse at this time. Please check your internet connection and try again."
+    )
 
 
 @api_router.get("/random-verse")
