@@ -128,48 +128,18 @@ export default function Index() {
     }
   };
 
-  const fetchRandomVerse = async (langCode: string, retryCount: number = 0) => {
-    const MAX_RETRIES = 3;
-    const RETRY_DELAY = 1000; // 1 second
-    
+  const fetchRandomVerse = async (langCode: string) => {
     setLoading(true);
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 second timeout
-      
-      const response = await fetch(`${API_BASE}/random-verse?language=${langCode}`, {
-        signal: controller.signal,
-      });
-      
-      clearTimeout(timeoutId);
-      
+      const response = await fetch(`${API_BASE}/random-verse?language=${langCode}`);
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
-        throw new Error(errorData.detail || 'Failed to fetch verse');
+        throw new Error('Failed to fetch verse');
       }
       const data = await response.json();
       setVerse(data);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching verse:', error);
-      
-      // Retry logic
-      if (retryCount < MAX_RETRIES) {
-        console.log(`Retrying... Attempt ${retryCount + 1}/${MAX_RETRIES}`);
-        showToast(`Loading verse... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
-        
-        // Wait before retrying with exponential backoff
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
-        
-        // Retry
-        return fetchRandomVerse(langCode, retryCount + 1);
-      }
-      
-      // All retries failed
-      if (error.name === 'AbortError') {
-        showToast('Connection timeout. Please check your internet and try again.');
-      } else {
-        showToast('Unable to load verse. Please check your connection and try again.');
-      }
+      showToast('Failed to fetch verse. Please try again.');
     } finally {
       setLoading(false);
     }
