@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tafaul.app",
-      "buildNumber": "18",
+      "buildNumber": "21",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
