@@ -2,7 +2,7 @@
   "expo": {
     "name": "TAFA'UL",
     "slug": "frontend",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon-tafaul.png",
     "scheme": "frontend",
@@ -11,6 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tafaul.app",
+      "buildNumber": "18",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
